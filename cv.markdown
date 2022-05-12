@@ -8,7 +8,7 @@ permalink: /cv/
 Feel free to email me (address below) if you need more than just my email.
 
 ## Education
-#### Ph.D. Computational Linguistics, 2019--2013 
+#### Ph.D. Computational Linguistics, 2019--2023 
 *University of Groningen*
 * Research topic: Improving neural machine translation for low-resource languages
 * Advisors: Dr. Antonio Toral, Prof. Gertjan van Noord
