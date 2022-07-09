@@ -40,7 +40,9 @@ Feel free to email me (address below) if you need more than just my email.
 ## Publications
 [Google Scholar, if you prefer](https://scholar.google.com/citations?user=QKJ4hkoAAAAJ)
 <!-- <span style="color:blue">some *blue* text</span>. -->
-* **Lukas Edman**, Antonio Toral, and Gertjan van Noord. The Importance of Context in Very Low Resource Language Modeling, *18th International Conference on Natural Language Processing (ICON2021).* 2021.
+* TBA anonymized paper under review
+* **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [Patching Leaks in the Charformer for Efficient Character-Level Generation](https://arxiv.org/pdf/2205.14086.pdf), *arXiv preprint arXiv:2205.14086.* 2022.
+* **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [The Importance of Context in Very Low Resource Language Modeling](https://arxiv.org/pdf/2205.04810.pdf), *18th International Conference on Natural Language Processing (ICON2021).* 2021.
 * **Lukas Edman**, Ahmet Üstün, Antonio Toral, and Gertjan van Noord. [Unsupervised Translation of German--Lower Sorbian: Exploring Training and Novel Transfer Methods on a Low-Resource Language](https://arxiv.org/pdf/2109.12012.pdf), *EMNLP 2021 Sixth Conference on Machine Translation (WMT21).* 2021.
     * Achieved first place for Lower Sorbian→German translation 
 * **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [Low-Resource Unsupervised NMT: Diagnosing the Problem and Providing a Linguistically Motivated Solution](https://aclanthology.org/2020.eamt-1.10.pdf), *The 22nd Annual Conference of the European Association for Machine Translation (EAMT2020).* 2020.
@@ -77,7 +79,7 @@ Feel free to email me (address below) if you need more than just my email.
 
 #### Reviewer, 2019--2023
 *University of Groningen* 
-* Reviewed academic papers for ICON2021.
+* Reviewed academic papers for ICON2021, EMNLP2022.
 * Co-reviewed several academic papers with Dr. Antonio Toral for WMT19, *SEM 2019, EAMT 2020, WMT20, and MT Journal.
 
 ## Technical Skills
