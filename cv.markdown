@@ -40,7 +40,7 @@ Feel free to email me (address below) if you need more than just my email.
 ## Publications
 [Google Scholar, if you prefer](https://scholar.google.com/citations?user=QKJ4hkoAAAAJ)
 <!-- <span style="color:blue">some *blue* text</span>. -->
-* TBA anonymized paper under review
+* **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [Subword-Delimited Downsampling for Better Character-Level Translation](https://arxiv.org/pdf/2212.01304.pdf), *Findings of the Association for Computational Linguistics: EMNLP 2022.* 2022.
 * **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [Patching Leaks in the Charformer for Efficient Character-Level Generation](https://arxiv.org/pdf/2205.14086.pdf), *arXiv preprint arXiv:2205.14086.* 2022.
 * **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [The Importance of Context in Very Low Resource Language Modeling](https://arxiv.org/pdf/2205.04810.pdf), *18th International Conference on Natural Language Processing (ICON2021).* 2021.
 * **Lukas Edman**, Ahmet Üstün, Antonio Toral, and Gertjan van Noord. [Unsupervised Translation of German--Lower Sorbian: Exploring Training and Novel Transfer Methods on a Low-Resource Language](https://arxiv.org/pdf/2109.12012.pdf), *EMNLP 2021 Sixth Conference on Machine Translation (WMT21).* 2021.
