@@ -15,7 +15,7 @@ Feel free to email me (address below) if you need more than just my email.
 
 #### Ph.D. Computational Linguistics, 2019--2023 
 *University of Groningen*
-* Research topic: Improving neural machine translation for low-resource languages
+* Thesis: [The Little Data That Could: Making the Most of Low-Resource Natural Language Processing](https://research.rug.nl/en/publications/the-little-data-that-could-making-the-most-of-low-resource-natura)
 * Advisors: Dr. Antonio Toral, Prof. Gertjan van Noord
 
 #### M.Sc. Artificial Intelligence, 2017--2019
