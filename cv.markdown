@@ -21,18 +21,18 @@ Feel free to email me (address below) if you need more than just my email.
 #### M.Sc. Artificial Intelligence, 2017--2019
 *University of Groningen*
 * Master's thesis on unsupervised neural machine translation under advisors Dr. Antonio Toral and Dr. Jennifer Spenader
-<!-- * Relevant coursework: 
-    * Natural Language Processing (Professor: Antonio Toral)
-    * Machine Learning (Professor: Marco Wiering)
-    * Deep Learning (Professor: Marco Wiering) -->
+<!-- * Relevant coursework:  -->
+<!-- * Natural Language Processing (Professor: Antonio Toral) -->
+<!-- * Machine Learning (Professor: Marco Wiering) -->
+<!-- * Deep Learning (Professor: Marco Wiering) -->
 
 #### B.Sc. Computer Science, 2016--2017 
 *Indiana University*
 * Graduated with Highest Honors with a 3.97/4.0 GPA
-<!-- * Relevant coursework:
-    * Computer Vision (Professor: Michael Ryoo)
-    * Summer Research in Computer Vision (Professor: Michael Ryoo) 
-    * Machine Learning (Professor: Martha White) -->
+<!-- * Relevant coursework: -->
+<!-- * Computer Vision (Professor: Michael Ryoo) -->
+<!-- * Summer Research in Computer Vision (Professor: Michael Ryoo)  -->
+<!-- * Machine Learning (Professor: Martha White) -->
 
 #### Computer Science Major, 2012--2016 
 *University of Puget Sound*
