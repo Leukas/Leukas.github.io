@@ -44,10 +44,10 @@ Feel free to email me (address below) if you need more than just my email.
 ## Publications
 [Google Scholar, if you prefer](https://scholar.google.com/citations?user=QKJ4hkoAAAAJ)
 <!-- <span style="color:blue">some *blue* text</span>. -->
-* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](), (Under Review). 2024.
+* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](). (Under Review). 2024.
 * **Lukas Edman**, Gabriele Sarti, Antonio Toral, Gertjan van Noord, and Arianna Bisazza. [Are Character-level Translations Worth the Wait? Comparing ByT5 and mT5 for Machine Translation](https://doi.org/10.1162/tacl_a_00651), *Transactions of the Association for Computational Linguistics: TACL 2024.* 2024.
 * **Lukas Edman**, Lisa Bylinina. [Too Much Information: Keeping Training Simple for BabyLMs](https://arxiv.org/abs/2311.01955), *Proceedings of the BabyLM Challenge at the 27th Conference on Computational Natural Language Learning.* 2023.
-* Konstantin Chernyshev, Ekaterina Garanina, Duygu Bayram, Qiankun Zheng, and **Lukas Edman**. [LCT-1 at SemEval-2023 Task 10: Pre-training and Multi-task Learning for Sexism Detection and Classification](), *Proceedings of the 17th International Workshop on Semantic Evaluation (SemEval-2023)* 2023.
+* Konstantin Chernyshev, Ekaterina Garanina, Duygu Bayram, Qiankun Zheng, and **Lukas Edman**. [LCT-1 at SemEval-2023 Task 10: Pre-training and Multi-task Learning for Sexism Detection and Classification](), *Proceedings of the 17th International Workshop on Semantic Evaluation (SemEval-2023).* 2023.
 * **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [Subword-Delimited Downsampling for Better Character-Level Translation](https://arxiv.org/pdf/2212.01304.pdf), *Findings of the Association for Computational Linguistics: EMNLP 2022.* 2022.
 * **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [Patching Leaks in the Charformer for Efficient Character-Level Generation](https://arxiv.org/pdf/2205.14086.pdf), *arXiv preprint arXiv:2205.14086.* 2022.
 * **Lukas Edman**, Antonio Toral, and Gertjan van Noord. [The Importance of Context in Very Low Resource Language Modeling](https://arxiv.org/pdf/2205.04810.pdf), *18th International Conference on Natural Language Processing (ICON2021).* 2021.
