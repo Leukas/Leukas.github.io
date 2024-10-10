@@ -42,7 +42,7 @@ Feel free to email me (address below) if you need more than just my email.
 
 
 ## Publications
-[Google Scholar, if you prefer](https://scholar.google.com/citations?user=QKJ4hkoAAAAJ)
+[Google Scholar, if you prefer](https://scholar.google.com/citations?user=DyA2BwUAAAAJ)
 <!-- <span style="color:blue">some *blue* text</span>. -->
 * **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](). (Under Review). 2024.
 * **Lukas Edman**, Gabriele Sarti, Antonio Toral, Gertjan van Noord, and Arianna Bisazza. [Are Character-level Translations Worth the Wait? Comparing ByT5 and mT5 for Machine Translation](https://doi.org/10.1162/tacl_a_00651), *Transactions of the Association for Computational Linguistics: TACL 2024.* 2024.
