@@ -44,7 +44,8 @@ Feel free to email me (address below) if you need more than just my email.
 ## Publications
 [Google Scholar, if you prefer](https://scholar.google.com/citations?user=DyA2BwUAAAAJ)
 <!-- <span style="color:blue">some *blue* text</span>. -->
-* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](). (Under Review). 2024.
+* **Lukas Edman**, Lisa Bylinina, Faeze Ghorbanpour, and Alexander Fraser. [Are BabyLMs Second Language Learners?](), *Proceedings of the BabyLM Challenge at the 28th Conference on Computational Natural Language Learning.* 2024.
+* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](https://arxiv.org/abs/2409.15452), *Proceedings of the Association for Computational Linguistics: EMNLP 2024.*. 2024.
 * **Lukas Edman**, Gabriele Sarti, Antonio Toral, Gertjan van Noord, and Arianna Bisazza. [Are Character-level Translations Worth the Wait? Comparing ByT5 and mT5 for Machine Translation](https://doi.org/10.1162/tacl_a_00651), *Transactions of the Association for Computational Linguistics: TACL 2024.* 2024.
 * **Lukas Edman**, Lisa Bylinina. [Too Much Information: Keeping Training Simple for BabyLMs](https://arxiv.org/abs/2311.01955), *Proceedings of the BabyLM Challenge at the 27th Conference on Computational Natural Language Learning.* 2023.
 * Konstantin Chernyshev, Ekaterina Garanina, Duygu Bayram, Qiankun Zheng, and **Lukas Edman**. [LCT-1 at SemEval-2023 Task 10: Pre-training and Multi-task Learning for Sexism Detection and Classification](), *Proceedings of the 17th International Workshop on Semantic Evaluation (SemEval-2023).* 2023.
