@@ -9,16 +9,16 @@ Feel free to email me (address below) if you need more than just my email.
 
 ## Education
 #### Post-Doc, 2024-- 
-*LMU Munich*
-* Research topics: Character-level NLP, Low-Resource NLP
+*LMU Munich*, 2024; *TU Munich*, 2025--
+* Research topics: Low-Resource NLP, Tokenization
 * Advisor: Prof. Alexander Fraser 
 
-#### Ph.D. Computational Linguistics, 2019--2023 
+#### PhD Computational Linguistics, 2019--2023 
 *University of Groningen*
 * Thesis: [The Little Data That Could: Making the Most of Low-Resource Natural Language Processing](https://research.rug.nl/en/publications/the-little-data-that-could-making-the-most-of-low-resource-natura)
 * Advisors: Dr. Antonio Toral, Prof. Gertjan van Noord
 
-#### M.Sc. Artificial Intelligence, 2017--2019
+#### MSc Artificial Intelligence, 2017--2019
 *University of Groningen*
 * Master's thesis on unsupervised neural machine translation under advisors Dr. Antonio Toral and Dr. Jennifer Spenader
 <!-- * Relevant coursework:  -->
@@ -26,7 +26,7 @@ Feel free to email me (address below) if you need more than just my email.
 <!-- * Machine Learning (Professor: Marco Wiering) -->
 <!-- * Deep Learning (Professor: Marco Wiering) -->
 
-#### B.Sc. Computer Science, 2016--2017 
+#### BSc Computer Science, 2016--2017 
 *Indiana University*
 * Graduated with Highest Honors with a 3.97/4.0 GPA
 <!-- * Relevant coursework: -->
@@ -42,10 +42,12 @@ Feel free to email me (address below) if you need more than just my email.
 
 
 ## Publications
-[Google Scholar, if you prefer](https://scholar.google.com/citations?user=DyA2BwUAAAAJ)
+[Google Scholar](https://scholar.google.com/citations?user=DyA2BwUAAAAJ)
 <!-- <span style="color:blue">some *blue* text</span>. -->
+* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](https://arxiv.org/abs/2505.17784), *Findings of the Conference of the Association for Computational Linguistics: ACL 2025.* 2025.
+* Lukas Kinder, **Lukas Edman**, Alexander Fraser, and Tobias Käfer. Positional Overload: Positional Debiasing and Context Window Extension for Large Language Models using Set Encoding, *Proceedings of the Conference of the Association for Computational Linguistics: ACL 2025.* 2025.
 * **Lukas Edman**, Lisa Bylinina, Faeze Ghorbanpour, and Alexander Fraser. [Are BabyLMs Second Language Learners?](), *Proceedings of the BabyLM Challenge at the 28th Conference on Computational Natural Language Learning.* 2024.
-* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](https://arxiv.org/abs/2409.15452), *Proceedings of the Association for Computational Linguistics: EMNLP 2024.*. 2024.
+* **Lukas Edman**, Helmut Schmid, and Alexander Fraser. [CUTE: Measuring LLMs’ Understanding of Their Tokens](https://arxiv.org/abs/2409.15452), *Proceedings of the Association for Computational Linguistics: EMNLP 2024.* 2024.
 * **Lukas Edman**, Gabriele Sarti, Antonio Toral, Gertjan van Noord, and Arianna Bisazza. [Are Character-level Translations Worth the Wait? Comparing ByT5 and mT5 for Machine Translation](https://doi.org/10.1162/tacl_a_00651), *Transactions of the Association for Computational Linguistics: TACL 2024.* 2024.
 * **Lukas Edman**, Lisa Bylinina. [Too Much Information: Keeping Training Simple for BabyLMs](https://arxiv.org/abs/2311.01955), *Proceedings of the BabyLM Challenge at the 27th Conference on Computational Natural Language Learning.* 2023.
 * Konstantin Chernyshev, Ekaterina Garanina, Duygu Bayram, Qiankun Zheng, and **Lukas Edman**. [LCT-1 at SemEval-2023 Task 10: Pre-training and Multi-task Learning for Sexism Detection and Classification](), *Proceedings of the 17th International Workshop on Semantic Evaluation (SemEval-2023).* 2023.
@@ -62,8 +64,13 @@ Feel free to email me (address below) if you need more than just my email.
 
 
 ## Work Experience
-#### Instructor, 2017--2023
-*University of Groningen*
+#### Instructor, 2017--2023, 2025--
+*TU Munich*, 2025--
+* Gave various lectures in the area of NLP
+* Designed courses for students
+* Supervised groups of students for project courses
+  
+*University of Groningen*, 2017--2023
 * Gave various lectures on Machine Learning, NLP, Computer Vision, and Audio Processing
 * Supervised students on projects for SemEval shared tasks
 * Led tutorial and computer lab sessions
@@ -84,20 +91,29 @@ Feel free to email me (address below) if you need more than just my email.
     * Advanced Algorithms and Data Structures, 2018--19<!--, Professor: Kerstin Bunte-->
     * Artificial Intelligence I, 2017--19<!--, Professor: Davide Grossi-->
 
-#### Thesis Supervisor, 2020--2023
-*University of Groningen*
+#### Thesis Supervisor, 2020--2023, 2025--
+*TU Munich* 2025--
 * Supervised Master's students on their thesis projects. 
-* Project on low-resourec
+* Project on translation of Azerbaijani to English with prompt tuning.
+* Project on distillation of Turkic translation models.
+* Project on song translation, preserving meaning, syllable count, rhyming. 
+* Project on translation of Korean to Jeju.
+
+*University of Groningen*, 2020--2023
+* Supervised Master's students on their thesis projects. 
 * Project on translation of Dutch--Gronings and other Lower Saxon dialects.
 * Project on unsupervised NMT for English--Chinese.
 
+#### Area Chair, 2025--
+* Area Chair for *ACL conferences.
+
 #### Reviewer, 2019--
-*LMU Munich, University of Groningen* 
-* Regular reviewer for *ACL conferences and affiliated workshops.
+* Reviewer for *ACL conferences and affiliated workshops.
+
 
 ## Technical Skills
 * Programming Languages
-    * Currently using: Python, Shell
+    * Currently using: Python, Rust, Shell
     * Prior experience with: Java, JavaScript, C
 * Software and Libraries
     * Currently using: PyTorch, HuggingFace
