@@ -6,7 +6,7 @@ permalink: /about/
 <img src="https://avatars.githubusercontent.com/u/5771164?v=4" alt="Avatar" style="width:20vw; border-radius:50%; float:left; margin-right:40px; margin-bottom:10px; margin-top:10px;"> 
 
 <!-- #### Work-Related -->
-I am currently a post-doc at LMU, researching various topics, including character-level NLP, low-resource pretraining, and machine translation. My most recent work has been on benchmarking LLMs' understanding of the characters in their tokens, which is surprisingly lacking. I believe that although everyone uses BPE and it is quite powerful, it is not the way forward in the long run. 
+I am currently a post-doc at TU Munich, researching various topics, including character-level NLP, low-resource pretraining, and machine translation. My most recent work has been on benchmarking LLMs' understanding of the characters in their tokens, which is surprisingly lacking. I believe that although everyone uses BPE and it is quite powerful, it is not the way forward in the long run. 
 
 I am also quite interested in efficiency methods for making training large models more feasible for everyone, not just big tech companies. In that front I've participated in the BabyLM Challenge, both in 2023 and currently in 2024. Humans clearly learn more efficiently from the "training data" we encounter, but on the other hand it takes us years to develop fluency in a language, whereas we are training LLMs in a matter of months. Is there a best of both worlds? That's what I'd like to find out.
 
