@@ -1,14 +1,24 @@
 import { useEffect, useRef } from 'react'
 
 const COUNT = 10
-const FACE_WIDTH = 80
-const FACE_HEIGHT = Math.round((240 / 198) * FACE_WIDTH)
+const FACE_WIDTH_DESKTOP = 80
+const FACE_WIDTH_MOBILE = 42
 const SPEED = 160
 const DEG = Math.PI / 180
 const MAX_FLING = 2800
 const FLING_WINDOW_MS = 100
 const BREAK_DELAY_MS = 2000
 const BREAK_SPEED = SPEED * 4.2
+
+function faceWidth() {
+  return window.matchMedia('(max-width: 700px)').matches
+    ? FACE_WIDTH_MOBILE
+    : FACE_WIDTH_DESKTOP
+}
+
+function faceHeight() {
+  return Math.round((240 / 198) * faceWidth())
+}
 
 /**
  * Boundary samples of opaque alpha from me_face.png (normalized [0,1] UV),
@@ -62,8 +72,8 @@ function makeFace(
   vy = 0,
 ): Face {
   return {
-    x: centerX - FACE_WIDTH / 2,
-    y: centerY - FACE_HEIGHT / 2,
+    x: centerX - faceWidth() / 2,
+    y: centerY - faceHeight() / 2,
     vx,
     vy,
     spin: 0,
@@ -73,8 +83,8 @@ function makeFace(
 
 /** 9-ball diamond rack + one cue face breaking from the left. */
 function spawnPoolBreak(): Face[] {
-  const spacingX = FACE_WIDTH * 0.82
-  const spacingY = FACE_HEIGHT * 0.72
+  const spacingX = faceWidth() * 0.82
+  const spacingY = faceHeight() * 0.72
   const rackCx = window.innerWidth * 0.58
   const rackCy = window.innerHeight * 0.5
 
@@ -96,7 +106,7 @@ function spawnPoolBreak(): Face[] {
     }
   })
 
-  const cueX = FACE_WIDTH * 0.75
+  const cueX = faceWidth() * 0.75
   // Cue starts still; break velocity is applied after BREAK_DELAY_MS.
   const cue = makeFace(cueX, rackCy, 0, 0)
 
@@ -106,11 +116,11 @@ function spawnPoolBreak(): Face[] {
 function localToWorld(face: Face, lx: number, ly: number) {
   const cos = Math.cos(face.rotation * DEG)
   const sin = Math.sin(face.rotation * DEG)
-  const ox = lx - FACE_WIDTH / 2
-  const oy = ly - FACE_HEIGHT / 2
+  const ox = lx - faceWidth() / 2
+  const oy = ly - faceHeight() / 2
   return {
-    x: face.x + FACE_WIDTH / 2 + ox * cos - oy * sin,
-    y: face.y + FACE_HEIGHT / 2 + ox * sin + oy * cos,
+    x: face.x + faceWidth() / 2 + ox * cos - oy * sin,
+    y: face.y + faceHeight() / 2 + ox * sin + oy * cos,
   }
 }
 
@@ -125,8 +135,8 @@ function outlineBounds(face: Face) {
   for (let i = 0; i < HIT_OUTLINE.length; i += 2) {
     const p = localToWorld(
       face,
-      HIT_OUTLINE[i] * FACE_WIDTH,
-      HIT_OUTLINE[i + 1] * FACE_HEIGHT,
+      HIT_OUTLINE[i] * faceWidth(),
+      HIT_OUTLINE[i + 1] * faceHeight(),
     )
     if (p.x < minX) minX = p.x
     if (p.x > maxX) maxX = p.x
@@ -151,8 +161,8 @@ function supportAlong(face: Face, nx: number, ny: number) {
   for (let i = 0; i < HIT_OUTLINE.length; i += 2) {
     const p = localToWorld(
       face,
-      HIT_OUTLINE[i] * FACE_WIDTH,
-      HIT_OUTLINE[i + 1] * FACE_HEIGHT,
+      HIT_OUTLINE[i] * faceWidth(),
+      HIT_OUTLINE[i + 1] * faceHeight(),
     )
     const proj = p.x * nx + p.y * ny
     if (proj > best) best = proj
@@ -422,8 +432,8 @@ export function BouncingFace() {
           className="bouncing-face"
           src="/me_face.png"
           alt=""
-          width={FACE_WIDTH}
-          height={FACE_HEIGHT}
+          width={faceWidth()}
+          height={faceHeight()}
           draggable={false}
         />
       ))}

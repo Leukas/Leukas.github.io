@@ -27,7 +27,10 @@ export function PoppingFaces() {
     const spawn = () => {
       if (cancelled) return
 
-      const size = 64 + Math.random() * 96
+      const mobile = window.matchMedia('(max-width: 700px)').matches
+      const size = mobile
+        ? 28 + Math.random() * 36
+        : 64 + Math.random() * 96
       const pop: Pop = {
         id: id++,
         x: Math.random() * 100,

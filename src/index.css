@@ -465,6 +465,10 @@ strong {
 }
 
 @media (max-width: 700px) {
+  .bouncing-face {
+    width: 42px;
+  }
+
   .footer-col-wrapper {
     grid-template-columns: 1fr;
   }
