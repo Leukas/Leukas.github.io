@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react'
 
 const COUNT = 10
-const FACE_WIDTH = 100
+const FACE_WIDTH = 80
 const FACE_HEIGHT = Math.round((240 / 198) * FACE_WIDTH)
 const SPEED = 160
 const DEG = Math.PI / 180
 const MAX_FLING = 2800
 const FLING_WINDOW_MS = 100
+const BREAK_DELAY_MS = 2000
+const BREAK_SPEED = SPEED * 4.2
 
 /**
  * Boundary samples of opaque alpha from me_face.png (normalized [0,1] UV),
@@ -53,17 +55,52 @@ type DragState = {
   samples: { t: number; x: number; y: number }[]
 }
 
-function randomFace(maxX: number, maxY: number): Face {
-  const angle = Math.random() * Math.PI * 2
-  const speed = SPEED * (0.7 + Math.random() * 0.6)
+function makeFace(
+  centerX: number,
+  centerY: number,
+  vx = 0,
+  vy = 0,
+): Face {
   return {
-    x: Math.random() * Math.max(0, maxX),
-    y: Math.random() * Math.max(0, maxY),
-    vx: Math.cos(angle) * speed,
-    vy: Math.sin(angle) * speed,
-    spin: (Math.random() < 0.5 ? -1 : 1) * (25 + Math.random() * 35),
-    rotation: Math.random() * 360,
+    x: centerX - FACE_WIDTH / 2,
+    y: centerY - FACE_HEIGHT / 2,
+    vx,
+    vy,
+    spin: 0,
+    rotation: -8 + Math.random() * 16,
   }
+}
+
+/** 9-ball diamond rack + one cue face breaking from the left. */
+function spawnPoolBreak(): Face[] {
+  const spacingX = FACE_WIDTH * 0.82
+  const spacingY = FACE_HEIGHT * 0.72
+  const rackCx = window.innerWidth * 0.58
+  const rackCy = window.innerHeight * 0.5
+
+  // Columns from apex (left) to back (right): 1-2-3-2-1
+  const columns: number[][] = [
+    [0],
+    [-0.5, 0.5],
+    [-1, 0, 1],
+    [-0.5, 0.5],
+    [0],
+  ]
+
+  const racked: Face[] = []
+  columns.forEach((rows, col) => {
+    for (const row of rows) {
+      racked.push(
+        makeFace(rackCx + col * spacingX, rackCy + row * spacingY),
+      )
+    }
+  })
+
+  const cueX = FACE_WIDTH * 0.75
+  // Cue starts still; break velocity is applied after BREAK_DELAY_MS.
+  const cue = makeFace(cueX, rackCy, 0, 0)
+
+  return [cue, ...racked]
 }
 
 function localToWorld(face: Face, lx: number, ly: number) {
@@ -229,12 +266,7 @@ export function BouncingFace() {
     ]
     if (imgs.length === 0) return
 
-    const faces = Array.from({ length: COUNT }, () =>
-      randomFace(
-        Math.max(0, window.innerWidth - FACE_WIDTH),
-        Math.max(0, window.innerHeight - FACE_HEIGHT),
-      ),
-    )
+    const faces = spawnPoolBreak()
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       faces.forEach((face, i) => {
@@ -242,6 +274,10 @@ export function BouncingFace() {
       })
       return
     }
+
+    const breakTimer = window.setTimeout(() => {
+      faces[0].vx = BREAK_SPEED
+    }, BREAK_DELAY_MS)
 
     let drag: DragState | null = null
     let frame = 0
@@ -367,6 +403,7 @@ export function BouncingFace() {
     frame = requestAnimationFrame(tick)
 
     return () => {
+      window.clearTimeout(breakTimer)
       cancelAnimationFrame(frame)
       for (const img of imgs) {
         img.removeEventListener('pointerdown', onPointerDown)

@@ -403,7 +403,7 @@ strong {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
+  width: 80px;
   height: auto;
   will-change: transform;
   user-select: none;
@@ -421,6 +421,45 @@ strong {
 }
 
 .home {
+  position: relative;
+  z-index: 1;
+}
+
+.popping-faces {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.popping-face {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0) rotate(var(--pop-rotate, 0deg));
+  transform-origin: center center;
+  opacity: 0.85;
+  animation-name: face-pop;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  user-select: none;
+}
+
+@keyframes face-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(var(--pop-rotate, 0deg));
+    opacity: 0;
+  }
+  45% {
+    transform: translate(-50%, -50%) scale(1) rotate(var(--pop-rotate, 0deg));
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0) rotate(var(--pop-rotate, 0deg));
+    opacity: 0;
+  }
+}
+
+.about-page {
   position: relative;
   z-index: 1;
 }
