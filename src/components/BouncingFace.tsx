@@ -10,43 +10,21 @@ const FLING_WINDOW_MS = 100
 const BREAK_DELAY_MS = 2000
 const BREAK_SPEED = SPEED * 4.2
 
+/** Opaque centroid + silhouette half-extents as fractions of face size. */
+const HIT_CX = 0.482
+const HIT_CY = 0.479
+const HIT_RX = 0.42
+const HIT_RY = 0.44
+
 function faceWidth() {
   return window.matchMedia('(max-width: 700px)').matches
     ? FACE_WIDTH_MOBILE
     : FACE_WIDTH_DESKTOP
 }
 
-function faceHeight() {
-  return Math.round((240 / 198) * faceWidth())
+function faceHeight(width = faceWidth()) {
+  return Math.round((240 / 198) * width)
 }
-
-/**
- * Boundary samples of opaque alpha from me_face.png (normalized [0,1] UV),
- * inset slightly toward the centroid so contacts hug the visible silhouette.
- */
-const HIT_OUTLINE = [
-  0.524, 0.0328, 0.5727, 0.0326, 0.2804, 0.0732, 0.3293, 0.0737, 0.3781,
-  0.0741, 0.4267, 0.0744, 0.4753, 0.0745, 0.5239, 0.0745, 0.5725, 0.0742,
-  0.6212, 0.0739, 0.6701, 0.0734, 0.7191, 0.0729, 0.1826, 0.1134, 0.2318,
-  0.114, 0.2809, 0.1146, 0.7186, 0.1143, 0.7677, 0.1137, 0.1338, 0.154,
-  0.1832, 0.1546, 0.7672, 0.1549, 0.8165, 0.1543, 0.1343, 0.1951, 0.8159,
-  0.1954, 0.8654, 0.1948, 0.0852, 0.2354, 0.1348, 0.236, 0.8649, 0.2357,
-  0.0857, 0.2763, 0.8645, 0.2766, 0.0861, 0.3171, 0.864, 0.3173, 0.9138,
-  0.3168, 0.0865, 0.3577, 0.9135, 0.3575, 0.0867, 0.3983, 0.9132, 0.3981,
-  0.0869, 0.4388, 0.9131, 0.4387, 0.087, 0.4792, 0.913, 0.4792, 0.0869,
-  0.5197, 0.913, 0.5198, 0.0868, 0.5602, 0.9132, 0.5603, 0.0865, 0.6008,
-  0.8636, 0.6006, 0.9134, 0.6009, 0.0861, 0.6414, 0.1359, 0.6409, 0.8639,
-  0.6412, 0.1354, 0.6816, 0.8147, 0.6813, 0.8644, 0.6819, 0.1349, 0.7224,
-  0.1844, 0.7217, 0.7659, 0.7214, 0.8153, 0.7221, 0.1838, 0.7627, 0.7665,
-  0.7623, 0.1832, 0.8038, 0.718, 0.8028, 0.7671, 0.8035, 0.1827, 0.845,
-  0.2319, 0.8444, 0.6696, 0.8435, 0.7185, 0.8441, 0.2314, 0.8857, 0.2805,
-  0.8852, 0.6212, 0.8845, 0.67, 0.8849, 0.2801, 0.9266, 0.329, 0.9262,
-  0.3779, 0.9258, 0.4266, 0.9256, 0.4753, 0.9255, 0.524, 0.9255, 0.5727,
-  0.9257, 0.6215, 0.926, 0.4265, 0.9673, 0.4753, 0.9672,
-] as const
-const HIT_PAD_X = 0
-const HIT_PAD_Y = 0
-const OUTLINE_COUNT = HIT_OUTLINE.length / 2
 
 type Face = {
   x: number
@@ -55,6 +33,8 @@ type Face = {
   vy: number
   spin: number
   rotation: number
+  cos: number
+  sin: number
 }
 
 type DragState = {
@@ -65,30 +45,41 @@ type DragState = {
   samples: { t: number; x: number; y: number }[]
 }
 
+function syncRotation(face: Face) {
+  const rad = face.rotation * DEG
+  face.cos = Math.cos(rad)
+  face.sin = Math.sin(rad)
+}
+
 function makeFace(
   centerX: number,
   centerY: number,
+  w: number,
+  h: number,
   vx = 0,
   vy = 0,
 ): Face {
-  return {
-    x: centerX - faceWidth() / 2,
-    y: centerY - faceHeight() / 2,
+  const face: Face = {
+    x: centerX - w / 2,
+    y: centerY - h / 2,
     vx,
     vy,
     spin: 0,
     rotation: -8 + Math.random() * 16,
+    cos: 1,
+    sin: 0,
   }
+  syncRotation(face)
+  return face
 }
 
 /** 9-ball diamond rack + one cue face breaking from the left. */
-function spawnPoolBreak(): Face[] {
-  const spacingX = faceWidth() * 0.82
-  const spacingY = faceHeight() * 0.72
+function spawnPoolBreak(w: number, h: number): Face[] {
+  const spacingX = w * 0.82
+  const spacingY = h * 0.72
   const rackCx = window.innerWidth * 0.58
   const rackCy = window.innerHeight * 0.5
 
-  // Columns from apex (left) to back (right): 1-2-3-2-1
   const columns: number[][] = [
     [0],
     [-0.5, 0.5],
@@ -101,132 +92,91 @@ function spawnPoolBreak(): Face[] {
   columns.forEach((rows, col) => {
     for (const row of rows) {
       racked.push(
-        makeFace(rackCx + col * spacingX, rackCy + row * spacingY),
+        makeFace(rackCx + col * spacingX, rackCy + row * spacingY, w, h),
       )
     }
   })
 
-  const cueX = faceWidth() * 0.75
-  // Cue starts still; break velocity is applied after BREAK_DELAY_MS.
-  const cue = makeFace(cueX, rackCy, 0, 0)
-
+  const cue = makeFace(w * 0.75, rackCy, w, h, 0, 0)
   return [cue, ...racked]
 }
 
-function localToWorld(face: Face, lx: number, ly: number) {
-  const cos = Math.cos(face.rotation * DEG)
-  const sin = Math.sin(face.rotation * DEG)
-  const ox = lx - faceWidth() / 2
-  const oy = ly - faceHeight() / 2
+function hitCenter(face: Face, w: number, h: number) {
+  const ox = HIT_CX * w - w / 2
+  const oy = HIT_CY * h - h / 2
   return {
-    x: face.x + faceWidth() / 2 + ox * cos - oy * sin,
-    y: face.y + faceHeight() / 2 + ox * sin + oy * cos,
+    x: face.x + w / 2 + ox * face.cos - oy * face.sin,
+    y: face.y + h / 2 + ox * face.sin + oy * face.cos,
   }
 }
 
-function outlineBounds(face: Face) {
-  let minX = Infinity
-  let maxX = -Infinity
-  let minY = Infinity
-  let maxY = -Infinity
-  let cx = 0
-  let cy = 0
-
-  for (let i = 0; i < HIT_OUTLINE.length; i += 2) {
-    const p = localToWorld(
-      face,
-      HIT_OUTLINE[i] * faceWidth(),
-      HIT_OUTLINE[i + 1] * faceHeight(),
-    )
-    if (p.x < minX) minX = p.x
-    if (p.x > maxX) maxX = p.x
-    if (p.y < minY) minY = p.y
-    if (p.y > maxY) maxY = p.y
-    cx += p.x
-    cy += p.y
-  }
-
-  return {
-    minX: minX - HIT_PAD_X,
-    maxX: maxX + HIT_PAD_X,
-    minY: minY - HIT_PAD_Y,
-    maxY: maxY + HIT_PAD_Y,
-    cx: cx / OUTLINE_COUNT,
-    cy: cy / OUTLINE_COUNT,
-  }
+function supportRadius(face: Face, nx: number, ny: number, w: number, h: number) {
+  const lx = nx * face.cos + ny * face.sin
+  const ly = -nx * face.sin + ny * face.cos
+  return Math.hypot(HIT_RX * w * lx, HIT_RY * h * ly)
 }
 
-function supportAlong(face: Face, nx: number, ny: number) {
-  let best = -Infinity
-  for (let i = 0; i < HIT_OUTLINE.length; i += 2) {
-    const p = localToWorld(
-      face,
-      HIT_OUTLINE[i] * faceWidth(),
-      HIT_OUTLINE[i + 1] * faceHeight(),
-    )
-    const proj = p.x * nx + p.y * ny
-    if (proj > best) best = proj
-  }
-  return best + HIT_PAD_X * Math.abs(nx) + HIT_PAD_Y * Math.abs(ny)
-}
+function bounceWalls(
+  face: Face,
+  viewW: number,
+  viewH: number,
+  w: number,
+  h: number,
+) {
+  const c = hitCenter(face, w, h)
+  const extX = supportRadius(face, 1, 0, w, h)
+  const extY = supportRadius(face, 0, 1, w, h)
 
-function bounceWalls(face: Face, width: number, height: number) {
-  const b = outlineBounds(face)
-
-  if (b.minX < 0) {
-    face.x -= b.minX
+  if (c.x - extX < 0) {
+    face.x += extX - c.x
     face.vx = Math.abs(face.vx)
     face.spin = -face.spin
-  } else if (b.maxX > width) {
-    face.x -= b.maxX - width
+    syncRotation(face)
+  } else if (c.x + extX > viewW) {
+    face.x -= c.x + extX - viewW
     face.vx = -Math.abs(face.vx)
     face.spin = -face.spin
+    syncRotation(face)
   }
 
-  if (b.minY < 0) {
-    face.y -= b.minY
+  if (c.y - extY < 0) {
+    face.y += extY - c.y
     face.vy = Math.abs(face.vy)
     face.spin = -face.spin
-  } else if (b.maxY > height) {
-    face.y -= b.maxY - height
+    syncRotation(face)
+  } else if (c.y + extY > viewH) {
+    face.y -= c.y + extY - viewH
     face.vy = -Math.abs(face.vy)
     face.spin = -face.spin
+    syncRotation(face)
   }
 }
 
 function collideFaces(
   a: Face,
   b: Face,
+  w: number,
+  h: number,
   freezeA = false,
   freezeB = false,
 ) {
   if (freezeA && freezeB) return
 
-  const ba = outlineBounds(a)
-  const bb = outlineBounds(b)
+  const ca = hitCenter(a, w, h)
+  const cb = hitCenter(b, w, h)
+  const dx = cb.x - ca.x
+  const dy = cb.y - ca.y
+  const distSq = dx * dx + dy * dy
+  if (distSq === 0) return
 
-  if (
-    ba.maxX < bb.minX ||
-    bb.maxX < ba.minX ||
-    ba.maxY < bb.minY ||
-    bb.maxY < ba.minY
-  ) {
-    return
-  }
-
-  const dx = bb.cx - ba.cx
-  const dy = bb.cy - ba.cy
-  const dist = Math.hypot(dx, dy)
-  if (dist === 0) return
-
+  const dist = Math.sqrt(distSq)
   const nx = dx / dist
   const ny = dy / dist
-  const aReach = supportAlong(a, nx, ny) - (ba.cx * nx + ba.cy * ny)
-  const bReach = supportAlong(b, -nx, -ny) - (bb.cx * -nx + bb.cy * -ny)
-  const gap = dist - aReach - bReach
-  if (gap >= 0) return
+  const minDist =
+    supportRadius(a, nx, ny, w, h) + supportRadius(b, -nx, -ny, w, h)
+  if (dist >= minDist) return
 
-  const push = -gap
+  const push = minDist - dist
   if (freezeA) {
     b.x += nx * push
     b.y += ny * push
@@ -249,6 +199,7 @@ function collideFaces(
       free.vx -= 2 * incoming * nx
       free.vy -= 2 * incoming * ny
       free.spin = -free.spin
+      syncRotation(free)
     }
     return
   }
@@ -262,10 +213,14 @@ function collideFaces(
   b.vy += dvn * ny
   a.spin = -a.spin
   b.spin = -b.spin
+  syncRotation(a)
+  syncRotation(b)
 }
 
 export function BouncingFace() {
   const layerRef = useRef<HTMLDivElement>(null)
+  const initialW = typeof window !== 'undefined' ? faceWidth() : FACE_WIDTH_DESKTOP
+  const initialH = faceHeight(initialW)
 
   useEffect(() => {
     const layer = layerRef.current
@@ -276,7 +231,9 @@ export function BouncingFace() {
     ]
     if (imgs.length === 0) return
 
-    const faces = spawnPoolBreak()
+    const w = faceWidth()
+    const h = faceHeight(w)
+    const faces = spawnPoolBreak(w, h)
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       faces.forEach((face, i) => {
@@ -358,6 +315,7 @@ export function BouncingFace() {
             face.vy *= MAX_FLING / speed
           }
           face.spin = face.vx * 0.08 + face.spin * 0.2
+          syncRotation(face)
         }
       }
 
@@ -375,37 +333,36 @@ export function BouncingFace() {
     const tick = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05)
       last = now
-      const width = window.innerWidth
-      const height = window.innerHeight
+      const viewW = window.innerWidth
+      const viewH = window.innerHeight
       const grabbed = drag?.index ?? -1
 
       for (let i = 0; i < faces.length; i++) {
         const face = faces[i]
         if (i === grabbed) {
-          bounceWalls(face, width, height)
+          bounceWalls(face, viewW, viewH, w, h)
           continue
         }
         face.x += face.vx * dt
         face.y += face.vy * dt
-        face.rotation += face.spin * dt
-        bounceWalls(face, width, height)
+        if (face.spin !== 0) {
+          face.rotation += face.spin * dt
+          syncRotation(face)
+        }
+        bounceWalls(face, viewW, viewH, w, h)
       }
 
       for (let i = 0; i < faces.length; i++) {
         for (let j = i + 1; j < faces.length; j++) {
-          collideFaces(
-            faces[i],
-            faces[j],
-            i === grabbed,
-            j === grabbed,
-          )
+          collideFaces(faces[i], faces[j], w, h, i === grabbed, j === grabbed)
         }
-        if (i !== grabbed) bounceWalls(faces[i], width, height)
+        if (i !== grabbed) bounceWalls(faces[i], viewW, viewH, w, h)
       }
 
-      faces.forEach((face, i) => {
+      for (let i = 0; i < faces.length; i++) {
+        const face = faces[i]
         imgs[i].style.transform = `translate3d(${face.x}px, ${face.y}px, 0) rotate(${face.rotation}deg)`
-      })
+      }
 
       frame = requestAnimationFrame(tick)
     }
@@ -432,8 +389,8 @@ export function BouncingFace() {
           className="bouncing-face"
           src="/me_face.png"
           alt=""
-          width={faceWidth()}
-          height={faceHeight()}
+          width={initialW}
+          height={initialH}
           draggable={false}
         />
       ))}
