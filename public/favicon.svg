@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
   <rect width="32" height="32" rx="4" fill="#424242"/>
-  <text x="16" y="22" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="16">L</text>
+  <g transform="translate(16 18) scale(1.56 1.62) translate(-16 -18)">
+    <text
+      x="16"
+      y="22"
+      text-anchor="middle"
+      fill="#fff"
+      font-family="Georgia, serif"
+      font-size="16"
+    >L</text>
+  </g>
 </svg>
