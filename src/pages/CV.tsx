@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { CvPeekers } from '../components/CvPeekers'
 
 function Pub({
   authors,
@@ -81,12 +82,7 @@ function Section({
 export function CV() {
   return (
     <>
-      <aside className="cv-peeker cv-peeker-left" aria-hidden="true">
-        <img src="/me_body.png" alt="" draggable={false} />
-      </aside>
-      <aside className="cv-peeker cv-peeker-right" aria-hidden="true">
-        <img src="/me_body.png" alt="" draggable={false} />
-      </aside>
+      <CvPeekers />
       <article className="post cv-page">
       <header className="post-header">
         <h1 className="post-title">My CV</h1>
