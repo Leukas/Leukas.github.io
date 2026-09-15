@@ -338,7 +338,16 @@ strong {
 
 @media (max-width: 700px) {
   .cv-peeker {
-    display: none;
+    height: min(36vh, 240px);
+  }
+
+  .cv-peeker-left {
+    top: 32%;
+    transform: translate(-55%, -50%) rotate(30deg);
+  }
+
+  .cv-peeker-right {
+    transform: translate(45%, 18%) rotate(-30deg);
   }
 }
 
