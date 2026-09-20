@@ -2,6 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 
 const MAX_POPS = 6
 const FACE_RATIO = 240 / 198
+const GOAL = 100
+
+const HIGH_SCORES = [
+  { name: 'Lukas (mobile)', accuracy: 87 },
+  { name: 'Lukas (trackpad)', accuracy: 50 },
+] as const
 
 export function PoppingFaces() {
   const layerRef = useRef<HTMLDivElement>(null)
@@ -10,8 +16,15 @@ export function PoppingFaces() {
   const [attempts, setAttempts] = useState(0)
   const [scoreOpen, setScoreOpen] = useState(false)
   const [bump, setBump] = useState(0)
+  const [finished, setFinished] = useState(false)
+  const [boardOpen, setBoardOpen] = useState(false)
 
   const accuracy = attempts === 0 ? 100 : Math.round((hits / attempts) * 100)
+
+  const boardRows = [
+    ...HIGH_SCORES.map((entry) => ({ ...entry, you: false })),
+    { name: 'You', accuracy, you: true },
+  ].sort((a, b) => b.accuracy - a.accuracy)
 
   useEffect(() => {
     const layer = layerRef.current
@@ -21,15 +34,34 @@ export function PoppingFaces() {
     }
 
     let cancelled = false
+    let finished = false
     let timeout = 0
     let active = 0
     let scoring = false
+    let localScore = 0
+    let localHits = 0
+    let localAttempts = 0
+
+    const pauseGame = () => {
+      finished = true
+      window.clearTimeout(timeout)
+      for (const face of layer.querySelectorAll('.popping-face')) {
+        face.remove()
+      }
+      active = 0
+      setFinished(true)
+      setBoardOpen(true)
+    }
 
     const award = (points: number, x: number, y: number) => {
+      if (finished) return
       scoring = true
-      setScore((prev) => prev + points)
-      setHits((prev) => prev + 1)
-      setAttempts((prev) => prev + 1)
+      localScore += points
+      localHits += 1
+      localAttempts += 1
+      setScore(localScore)
+      setHits(localHits)
+      setAttempts(localAttempts)
       setScoreOpen(true)
       setBump((n) => n + 1)
 
@@ -46,10 +78,14 @@ export function PoppingFaces() {
         },
         { once: true },
       )
+
+      if (localScore >= GOAL) {
+        pauseGame()
+      }
     }
 
     const spawn = () => {
-      if (cancelled || !layer) return
+      if (cancelled || finished || !layer) return
       if (active >= MAX_POPS) {
         timeout = window.setTimeout(spawn, 400)
         return
@@ -88,15 +124,16 @@ export function PoppingFaces() {
       const remove = () => {
         img.removeEventListener('animationend', remove)
         img.removeEventListener('pointerdown', onHit)
-        if (!hit && countsForAccuracy) {
-          setAttempts((prev) => prev + 1)
+        if (!hit && countsForAccuracy && !finished) {
+          localAttempts += 1
+          setAttempts(localAttempts)
         }
         img.remove()
         active -= 1
       }
 
       const onHit = (event: PointerEvent) => {
-        if (hit) return
+        if (hit || finished) return
         hit = true
         event.preventDefault()
         event.stopPropagation()
@@ -124,7 +161,7 @@ export function PoppingFaces() {
   return (
     <>
       <div ref={layerRef} className="popping-faces" aria-hidden="true" />
-      {scoreOpen ? (
+      {scoreOpen && !finished ? (
         <div
           className={`mole-score${bump ? ' mole-score-bump' : ''}`}
           key={bump}
@@ -140,6 +177,31 @@ export function PoppingFaces() {
             <span className="mole-score-label">Accuracy</span>
             <span className="mole-score-value mole-score-accuracy">{accuracy}%</span>
           </div>
+        </div>
+      ) : null}
+      {boardOpen ? (
+        <div className="mole-board" role="dialog" aria-label="High scores">
+          <button
+            type="button"
+            className="mole-board-close"
+            onClick={() => setBoardOpen(false)}
+            aria-label="Close high scores"
+          >
+            ×
+          </button>
+          <p className="mole-board-kicker">Score {GOAL}</p>
+          <h2 className="mole-board-title">High Scores</h2>
+          <ol className="mole-board-list">
+            {boardRows.map((row) => (
+              <li
+                key={row.name}
+                className={row.you ? 'mole-board-row is-you' : 'mole-board-row'}
+              >
+                <span className="mole-board-name">{row.name}</span>
+                <span className="mole-board-acc">{row.accuracy}%</span>
+              </li>
+            ))}
+          </ol>
         </div>
       ) : null}
     </>
