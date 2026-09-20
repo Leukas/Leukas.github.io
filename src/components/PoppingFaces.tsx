@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
-const MAX_POPS = 6
+const MAX_POPS = 12
 const FACE_RATIO = 240 / 198
 const GOAL = 100
 
 const HIGH_SCORES = [
   { name: 'Lukas (mobile)', accuracy: 87 },
-  { name: 'Lukas (trackpad)', accuracy: 50 },
+  { name: 'Lukas (trackpad)', accuracy: 33 },
 ] as const
 
 export function PoppingFaces() {
@@ -93,7 +93,7 @@ export function PoppingFaces() {
 
       const mobile = window.matchMedia('(max-width: 700px)').matches
       const size = mobile ? 28 + Math.random() * 36 : 64 + Math.random() * 96
-      const duration = 1.4 + Math.random() * 1.4
+      const duration = 2.2 + Math.random() * 1.6
       const rotate = -25 + Math.random() * 50
       const points = size < (mobile ? 40 : 90) ? 3 : size < (mobile ? 52 : 120) ? 2 : 1
 
@@ -147,7 +147,7 @@ export function PoppingFaces() {
 
       layer.appendChild(img)
       active += 1
-      timeout = window.setTimeout(spawn, 350 + Math.random() * 750)
+      timeout = window.setTimeout(spawn, 120 + Math.random() * 280)
     }
 
     timeout = window.setTimeout(spawn, 200)
