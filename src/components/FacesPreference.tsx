@@ -16,9 +16,9 @@ const FacesContext = createContext<FacesContextValue | null>(null)
 
 function readStored(): boolean {
   try {
-    return localStorage.getItem(STORAGE_KEY) !== '0'
+    return localStorage.getItem(STORAGE_KEY) === '1'
   } catch {
-    return true
+    return false
   }
 }
 
