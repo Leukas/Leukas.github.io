@@ -1,10 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const MAX_POPS = 6
 const FACE_RATIO = 240 / 198
 
 export function PoppingFaces() {
   const layerRef = useRef<HTMLDivElement>(null)
+  const [score, setScore] = useState(0)
+  const [hits, setHits] = useState(0)
+  const [attempts, setAttempts] = useState(0)
+  const [scoreOpen, setScoreOpen] = useState(false)
+  const [bump, setBump] = useState(0)
+
+  const accuracy = attempts === 0 ? 100 : Math.round((hits / attempts) * 100)
 
   useEffect(() => {
     const layer = layerRef.current
@@ -16,6 +23,30 @@ export function PoppingFaces() {
     let cancelled = false
     let timeout = 0
     let active = 0
+    let scoring = false
+
+    const award = (points: number, x: number, y: number) => {
+      scoring = true
+      setScore((prev) => prev + points)
+      setHits((prev) => prev + 1)
+      setAttempts((prev) => prev + 1)
+      setScoreOpen(true)
+      setBump((n) => n + 1)
+
+      const float = document.createElement('span')
+      float.className = 'mole-float'
+      float.textContent = `+${points}`
+      float.style.left = `${x}px`
+      float.style.top = `${y}px`
+      layer.appendChild(float)
+      float.addEventListener(
+        'animationend',
+        () => {
+          float.remove()
+        },
+        { once: true },
+      )
+    }
 
     const spawn = () => {
       if (cancelled || !layer) return
@@ -28,6 +59,7 @@ export function PoppingFaces() {
       const size = mobile ? 28 + Math.random() * 36 : 64 + Math.random() * 96
       const duration = 1.4 + Math.random() * 1.4
       const rotate = -25 + Math.random() * 50
+      const points = size < (mobile ? 40 : 90) ? 3 : size < (mobile ? 52 : 120) ? 2 : 1
 
       const img = document.createElement('img')
       img.className = 'popping-face'
@@ -41,12 +73,31 @@ export function PoppingFaces() {
       img.style.animationDuration = `${duration}s`
       img.style.setProperty('--pop-rotate', `${rotate}deg`)
 
+      let hit = false
+      const countsForAccuracy = scoring
+
       const remove = () => {
         img.removeEventListener('animationend', remove)
+        img.removeEventListener('pointerdown', onHit)
+        if (!hit && countsForAccuracy) {
+          setAttempts((prev) => prev + 1)
+        }
         img.remove()
         active -= 1
       }
+
+      const onHit = (event: PointerEvent) => {
+        if (hit) return
+        hit = true
+        event.preventDefault()
+        event.stopPropagation()
+        img.classList.add('popping-face-whacked')
+        img.style.animationDuration = '0.28s'
+        award(points, event.clientX, event.clientY)
+      }
+
       img.addEventListener('animationend', remove)
+      img.addEventListener('pointerdown', onHit)
 
       layer.appendChild(img)
       active += 1
@@ -61,5 +112,26 @@ export function PoppingFaces() {
     }
   }, [])
 
-  return <div ref={layerRef} className="popping-faces" aria-hidden="true" />
+  return (
+    <>
+      <div ref={layerRef} className="popping-faces" aria-hidden="true" />
+      {scoreOpen ? (
+        <div
+          className={`mole-score${bump ? ' mole-score-bump' : ''}`}
+          key={bump}
+          role="status"
+          aria-live="polite"
+        >
+          <div className="mole-score-row">
+            <span className="mole-score-label">Score</span>
+            <span className="mole-score-value">{score}</span>
+          </div>
+          <div className="mole-score-row">
+            <span className="mole-score-label">Accuracy</span>
+            <span className="mole-score-value mole-score-accuracy">{accuracy}%</span>
+          </div>
+        </div>
+      ) : null}
+    </>
+  )
 }

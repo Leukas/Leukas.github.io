@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { CvPeekers } from '../components/CvPeekers'
+import { useFacesEnabled } from '../components/FacesPreference'
 
 function Pub({
   authors,
@@ -80,9 +81,11 @@ function Section({
 }
 
 export function CV() {
+  const { enabled: facesEnabled } = useFacesEnabled()
+
   return (
     <>
-      <CvPeekers />
+      {facesEnabled ? <CvPeekers /> : null}
       <article className="post cv-page">
       <header className="post-header">
         <h1 className="post-title">My CV</h1>

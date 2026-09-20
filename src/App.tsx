@@ -4,6 +4,7 @@ import {
   RouterProvider,
   useLocation,
 } from 'react-router-dom'
+import { FacesProvider } from './components/FacesPreference'
 import { Layout } from './components/Layout'
 import { About } from './pages/About'
 import { CV } from './pages/CV'
@@ -29,11 +30,16 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
       { path: 'cv', element: <CV /> },
+      { path: 'news', element: <Navigate to="/" replace /> },
       { path: '*', element: <NotFound /> },
     ],
   },
 ])
 
 export default function App() {
-  return <RouterProvider router={router} />
+  return (
+    <FacesProvider>
+      <RouterProvider router={router} />
+    </FacesProvider>
+  )
 }

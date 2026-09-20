@@ -1,10 +1,13 @@
 import { site } from '../data/site'
+import { useFacesEnabled } from '../components/FacesPreference'
 import { PoppingFaces } from '../components/PoppingFaces'
 
 export function About() {
+  const { enabled: facesEnabled } = useFacesEnabled()
+
   return (
     <>
-      <PoppingFaces />
+      {facesEnabled ? <PoppingFaces /> : null}
       <article className="post about-page">
         <header className="post-header">
           <h1 className="post-title">About Me</h1>

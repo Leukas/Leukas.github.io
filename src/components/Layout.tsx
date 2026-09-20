@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { site } from '../data/site'
+import { FacesToggle } from './FacesPreference'
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? 'nav-link active' : 'nav-link'
@@ -9,9 +10,12 @@ export function Layout() {
     <div className="site">
       <header className="site-header">
         <div className="wrapper">
-          <NavLink className="site-title" to="/">
-            {site.title}
-          </NavLink>
+          <div className="site-brand">
+            <NavLink className="site-title" to="/">
+              {site.title}
+            </NavLink>
+            <FacesToggle />
+          </div>
           <nav className="site-nav">
             <NavLink to="/about" className={navClass}>
               About Me
