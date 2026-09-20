@@ -66,10 +66,19 @@ export function PoppingFaces() {
       img.src = '/me_face.png'
       img.alt = ''
       img.draggable = false
-      img.style.left = `${Math.random() * 100}%`
-      img.style.top = `${Math.random() * 100}%`
+
+      const header = document.querySelector('.site-header')
+      const headerBottom = header?.getBoundingClientRect().bottom ?? 72
+      const height = size * FACE_RATIO
+      const minTop = headerBottom + height / 2 + 8
+      const maxTop = window.innerHeight - height / 2 - 8
+      const topPx =
+        maxTop > minTop ? minTop + Math.random() * (maxTop - minTop) : minTop
+
+      img.style.left = `${8 + Math.random() * 84}%`
+      img.style.top = `${topPx}px`
       img.style.width = `${size}px`
-      img.style.height = `${size * FACE_RATIO}px`
+      img.style.height = `${height}px`
       img.style.animationDuration = `${duration}s`
       img.style.setProperty('--pop-rotate', `${rotate}deg`)
 
@@ -125,6 +134,7 @@ export function PoppingFaces() {
           <div className="mole-score-row">
             <span className="mole-score-label">Score</span>
             <span className="mole-score-value">{score}</span>
+            <span className="mole-score-hint">(get to 100!)</span>
           </div>
           <div className="mole-score-row">
             <span className="mole-score-label">Accuracy</span>
