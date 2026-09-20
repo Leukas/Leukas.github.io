@@ -5,7 +5,8 @@ const FACE_RATIO = 240 / 198
 const GOAL = 100
 
 const HIGH_SCORES = [
-  { name: 'Lukas (mobile)', accuracy: 87 },
+  { name: 'Lukas (mobile)', accuracy: 81 },
+  { name: 'Lukas (desktop)', accuracy: 64 },
   { name: 'Lukas (trackpad)', accuracy: 33 },
 ] as const
 
