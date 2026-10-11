@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { CvPeekers } from '../components/CvPeekers'
 import { useFacesEnabled } from '../components/FacesPreference'
+import { site } from '../data/site'
 
 function Pub({
   authors,
@@ -166,7 +167,7 @@ export function CV() {
         <Section title="Publications" defaultOpen>
         <p>
           <a
-            href="https://scholar.google.com/citations?user=DyA2BwUAAAAJ"
+            href={`https://scholar.google.com/citations?user=${site.scholar}`}
             rel="noopener noreferrer"
             target="_blank"
           >
