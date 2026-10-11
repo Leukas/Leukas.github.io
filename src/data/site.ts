@@ -8,5 +8,6 @@ export const site = {
   bluesky: 'luksanlp.bsky.social',
   scholar: 'DyA2BwUAAAAJ',
   linkedin: 'lukas-edman-3ba724106',
+  goatcounter: 'leukas',
   avatar: '/me_body.png',
 } as const

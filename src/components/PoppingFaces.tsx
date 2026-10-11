@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 const MAX_POPS = 12
 const FACE_RATIO = 240 / 198
@@ -159,24 +160,23 @@ export function PoppingFaces() {
     }
   }, [])
 
-  return (
+  return createPortal(
     <>
       <div ref={layerRef} className="popping-faces" aria-hidden="true" />
       {scoreOpen && !finished ? (
-        <div
-          className={`mole-score${bump ? ' mole-score-bump' : ''}`}
-          key={bump}
-          role="status"
-          aria-live="polite"
-        >
+        <div className="mole-score" role="status" aria-live="polite">
           <div className="mole-score-row">
             <span className="mole-score-label">Score</span>
-            <span className="mole-score-value">{score}</span>
+            <span className="mole-score-value" key={bump}>
+              {score}
+            </span>
             <span className="mole-score-hint">(get to 100!)</span>
           </div>
           <div className="mole-score-row">
             <span className="mole-score-label">Accuracy</span>
-            <span className="mole-score-value mole-score-accuracy">{accuracy}%</span>
+            <span className="mole-score-value mole-score-accuracy">
+              {accuracy}%
+            </span>
           </div>
         </div>
       ) : null}
@@ -205,6 +205,7 @@ export function PoppingFaces() {
           </ol>
         </div>
       ) : null}
-    </>
+    </>,
+    document.body,
   )
 }

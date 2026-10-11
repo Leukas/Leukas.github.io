@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { site } from '../data/site'
 import { FacesToggle, useFacesEnabled } from './FacesPreference'
+import { GoatCounter } from './GoatCounter'
 import { HexGridBackground } from './HexGridBackground'
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
@@ -11,6 +12,7 @@ export function Layout() {
 
   return (
     <div className={funMode ? 'site site-disco' : 'site'}>
+      <GoatCounter />
       <HexGridBackground />
       <header className="site-header">
         <div className="wrapper">

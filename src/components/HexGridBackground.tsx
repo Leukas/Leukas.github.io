@@ -248,7 +248,8 @@ export function HexGridBackground() {
       ctx.drawImage(grid, 0, 0)
     }
 
-    const BEAM_HALF = 0.11
+    const BEAM_HALF = 0.09
+    const BEAM_COUNT = 6
 
     const discoFrame = (now: number) => {
       if (cancelled) return
@@ -261,15 +262,17 @@ export function HexGridBackground() {
       ctx.drawImage(grid, 0, 0)
 
       const cx = width * 0.5
-      const cy = height * 0.06
+      const cy = height * 0.5
       const len = Math.hypot(width, height)
       const base = now / 1600
 
       const beams: Array<{ angle: number; cos: number; sin: number; c: Rgb }> =
         []
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < BEAM_COUNT; i++) {
         const angle =
-          base + (i * Math.PI * 2) / 3 + Math.sin(now / 900 + i) * 0.35
+          base +
+          (i * Math.PI * 2) / BEAM_COUNT +
+          Math.sin(now / 900 + i * 1.7) * 0.28
         beams.push({
           angle,
           cos: Math.cos(angle),

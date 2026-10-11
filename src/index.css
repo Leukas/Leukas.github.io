@@ -197,7 +197,6 @@ strong {
   flex: 1;
   padding: 2rem 0;
   position: relative;
-  z-index: 1;
 }
 
 .page-content .wrapper {
@@ -340,7 +339,7 @@ strong {
 .cv-peeker-layer {
   position: fixed;
   inset: 0;
-  z-index: 4;
+  z-index: 18;
   overflow: hidden;
   pointer-events: none;
 }
@@ -360,7 +359,7 @@ strong {
 
 .cv-peeker-img.is-dragging {
   cursor: grabbing;
-  z-index: 5;
+  z-index: 19;
 }
 
 .site-footer {
@@ -502,7 +501,7 @@ strong {
 .popping-faces {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 15;
   overflow: hidden;
   pointer-events: none;
 }
@@ -561,7 +560,7 @@ strong {
   position: fixed;
   top: 4.75rem;
   right: 1.25rem;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
@@ -573,12 +572,6 @@ strong {
   line-height: 1.15;
   pointer-events: none;
   animation: mole-score-in 0.35s ease-out;
-}
-
-.mole-score-bump {
-  animation:
-    mole-score-in 0.35s ease-out,
-    mole-score-pulse 0.28s ease-out;
 }
 
 .mole-score-row {
@@ -599,6 +592,11 @@ strong {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text);
+  display: inline-block;
+}
+
+.mole-score-value:not(.mole-score-accuracy) {
+  animation: mole-score-pulse 0.28s ease-out;
 }
 
 .mole-score-hint {
@@ -608,11 +606,12 @@ strong {
 
 .mole-score-accuracy {
   font-size: 1.125rem;
+  animation: none;
 }
 
 .mole-float {
   position: fixed;
-  z-index: 11;
+  z-index: 16;
   transform: translate(-50%, -100%);
   font-family: var(--font-mono);
   font-size: 1.125rem;
@@ -658,7 +657,7 @@ strong {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 12;
+  z-index: 21;
   transform: translate(-50%, -50%);
   width: min(22rem, calc(100vw - 2.5rem));
   padding: 1.25rem 1.35rem 1.15rem;

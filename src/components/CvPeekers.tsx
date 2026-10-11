@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 const BODY_RATIO = 509 / 842
 const DEG = Math.PI / 180
@@ -246,7 +247,7 @@ export function CvPeekers() {
     }
   }, [])
 
-  return (
+  return createPortal(
     <div ref={layerRef} className="cv-peeker-layer" aria-hidden="true">
       <img
         className="cv-peeker-img"
@@ -260,6 +261,7 @@ export function CvPeekers() {
         alt=""
         draggable={false}
       />
-    </div>
+    </div>,
+    document.body,
   )
 }
