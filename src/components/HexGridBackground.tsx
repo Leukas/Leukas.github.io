@@ -49,10 +49,6 @@ function axialRound(q: number, r: number) {
   return { q: rq, r: rr }
 }
 
-function rgba(c: Rgb, a: number) {
-  return `rgba(${c.r},${c.g},${c.b},${a})`
-}
-
 function drawHex(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -316,19 +312,6 @@ export function HexGridBackground() {
         )
       }
 
-      for (const beam of beams) {
-        ctx.save()
-        ctx.translate(cx, cy)
-        ctx.rotate(beam.angle)
-        ctx.fillStyle = rgba(beam.c, 0.08)
-        ctx.beginPath()
-        ctx.moveTo(0, 0)
-        ctx.lineTo(len, -len * BEAM_HALF)
-        ctx.lineTo(len, len * BEAM_HALF)
-        ctx.closePath()
-        ctx.fill()
-        ctx.restore()
-      }
     }
 
     const seriousFrame = (now: number) => {
